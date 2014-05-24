@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import unicode_literals
 
+import os.path
 import re
 
 from PIL import Image, ImageDraw, ImageFont
@@ -10,8 +11,24 @@ import tinycss
 __all__ = ['_generate']
 
 
-def get_fa_image_url(icon, color, size, filename):
-    pass
+def get_fa_image_url(icon, color_hex, size):
+    filename = 'images/{0}_{1}_{2}.png'.format(icon, color_hex, size)
+
+    if os.path.isfile(filename):
+        return filename
+
+    r = int(color_hex[0:2], 16)
+    g = int(color_hex[2:4], 16)
+    b = int(color_hex[4:6], 16)
+    color = (r, g, b)
+
+    try:
+        _generate(icon, color, size, filename)
+    except Exception as e:
+        print e
+        return None
+    else:
+        return filename
 
 
 def _generate(icon, color, size, filename):
@@ -46,6 +63,8 @@ def _generate(icon, color, size, filename):
 
     bg.save(filename)
 
+    return True
+
 
 def _get_icon_char(icon):
     parser = tinycss.make_parser('page3')
@@ -67,5 +86,8 @@ def _get_icon_char(icon):
 if __name__ == '__main__':
     # generate('database', 'blue', 512, "test.png")
     # generate('file-audio-o', 'red', 512, "test.png")
-    _generate('exclamation-triangle', (0, 0, 255), 512, "test2.png")
+    # _generate('exclamation-triangle', (0, 0, 255), 512, "test2.png")
+    # get_fa_image_url('exclamation-triangle', 'FF0000', 512)
+    # get_fa_image_url('exclamation-triangle', 'F0F000', 512)
+    get_fa_image_url('exclamation-triangle', 'FF0000', 256)
 
