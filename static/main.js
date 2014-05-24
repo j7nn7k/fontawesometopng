@@ -22,6 +22,7 @@ $(document).ready(function () {
                     var $helper = $('#download-helper');
                     $helper.attr('href', image);
                     $helper.attr('download', image.split('/images/')[1]);
+                    $helper.removeClass('hidden');
                 })
                 .fail(function (jqxhr, textStatus, error) {
                     alert('Fail, please check your input values.');
