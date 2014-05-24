@@ -1,0 +1,8 @@
+---
+- name: apply common configuration to a vagrant test machine
+  hosts: vagrant
+  sudo: True
+
+  roles:
+    - common
+    - app

@@ -1,0 +1,40 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: ensure app server packages are installed
+  apt: pkg={{item}} state=present
+  sudo: yes
+  with_items:
+    - git
+    - python-pip 
+    - python-dev
+    - python-setuptools
+    - libpq-dev
+    - python-virtualenv
+    - nginx
+    - supervisor
+    - libtiff4-dev
+    - libjpeg8-dev
+    - zlib1g-dev
+    - libfreetype6-dev
+    - liblcms2-dev
+    - libwebp-dev
+    - tcl8.5-dev
+    - tk8.5-dev
+    - python-tk
+
+- name: install custom packages
+  apt: pkg={{item}} state=present
+  sudo: yes
+  with_items: custom_app_pkg
+  when: item != ''
+
+- include: config_user_permissions.yml
+
+- include: flask_setup.yml
+
+- include: config_gunicorn.yml
+
+- include: config_supervisor.yml
+
+- include: config_nginx.yml

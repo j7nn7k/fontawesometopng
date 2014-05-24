@@ -1,0 +1,5 @@
+[program:gunicorn]
+user={{ webapp_user }}
+command={{ webapps_home }}bin/gunicorn_start.sh
+stdout_logfile=/var/log/supervisor/logfile.log
+stderr_logfile=/var/log/supervisor/error-logfile.log

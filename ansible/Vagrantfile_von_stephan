@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "trusty64"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.inventory_path = "deploy/inventories/vagrant"
+    ansible.playbook = "deploy/site.yml"
+    ansible.verbose = "vvvv"
+  end
+
+  config.vm.define :app1 do |node|
+    node.vm.hostname = "app1"
+    node.vm.network :private_network, ip: "192.168.30.120"
+  end
+
+  config.vm.define :db1 do |node|
+    node.vm.hostname = "db1"
+    node.vm.network :private_network, ip: "192.168.30.200"
+  end
+end
+
+
+
+###
+
+ansible host file:
+
+[loadbalancers]
+lb1 ansible_ssh_host=192.168.30.100
+
+[appservers]
+app1 ansible_ssh_host=192.168.30.120
+
+[dbservers]
+db1 ansible_ssh_host=192.168.30.200
+
+[cacheservers]
+cache1 ansible_ssh_host=192.168.30.220
+
+[vagrant:children]
+appservers

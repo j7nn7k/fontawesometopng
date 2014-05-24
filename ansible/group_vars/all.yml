@@ -1,0 +1,37 @@
+---
+# Variables listed here are applicable to all host groups
+
+
+# *** app servers - TODO consider using own group vars file
+
+webapps_home: /var/www/webapps/
+
+app_name_verbose: fontawesometopng # e.g. my_awesome_application
+app_checkout_path: "{{ webapps_home }}{{ app_name_verbose }}/"
+virtualenv_path: "{{ app_checkout_path }}venv/"
+requirements_file: "{{ app_checkout_path }}requirements.txt"
+static_path: "{{ app_checkout_path }}static/"
+uploads_path: "{{ app_checkout_path }}static/images/"
+
+# TODO make dynamic later
+domain: fontawesometopng.io
+sub_domain: www
+
+port: 4000
+
+webapp_user: webapp
+
+git_repo: git@github.com:j7nn7k/fontawesometopng.git # ssh path
+
+# define additional packages like
+# custom_app_pkg:
+#   - pkg1
+#   - pkg2
+custom_app_pkg:
+
+# define costom hosts on the app server
+# e.g.:
+# custom_app_hosts:
+#   - "192.168.111.222 www.example.com"
+# PLEASE USE DOUBLE QUOTES
+custom_app_hosts:

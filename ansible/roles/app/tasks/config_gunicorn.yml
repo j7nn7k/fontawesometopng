@@ -1,0 +1,13 @@
+---
+
+- name: add gunicorn log dir
+  file: dest=/var/log/gunicorn/ mode=777 owner={{ webapp_user }} group={{ webapp_user }} state=directory
+
+- name: add run scrips dir
+  file: dest={{ webapps_home }}bin/ mode=755 owner={{ webapp_user }} group={{ webapp_user }} state=directory
+
+- name: add run dir
+  file: dest={{ webapps_home }}bin/run/ mode=777 owner={{ webapp_user }} group={{ webapp_user }} state=directory
+
+- name: add the gunicorn start script
+  template: src=gunicorn_start.sh.j2 dest={{ webapps_home }}bin/gunicorn_start.sh mode=755 owner={{ webapp_user }} group={{ webapp_user }}
