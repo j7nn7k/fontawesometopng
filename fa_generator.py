@@ -7,36 +7,44 @@ from PIL import Image, ImageDraw, ImageFont
 import tinycss
 
 
-__all__ = ['generate']
+__all__ = ['_generate']
 
 
-def generate(icon, color, size, filename):
-    image = Image.new('RGBA', (size, size), color=(0, 0, 0, 0))
+def get_fa_image_url(icon, color, size, filename):
+    pass
+
+
+def _generate(icon, color, size, filename):
+    image = Image.new('RGBA', (int(size * 1.5), int(size * 1.5)), color=(0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype('fontawesome-webfont.ttf', size)
-    char = _get_icon_char(icon)
-    width, height = font.getsize(char)
-    x = (size - width) / 2
-    y = (size - height) / 2
-    pos = (x, y)
-    draw.text(pos, char, color, font)
-    image.save(filename)
 
-    # bbox = image.getbbox()
-    #
-    # if bbox:
-    #     image = image.crop(bbox)
-    #
-    # borderw = int((size - (bbox[2] - bbox[0])) / 2)
-    # borderh = int((size - (bbox[3] - bbox[1])) / 2)
-    #
-    # # Create background image
-    # bg = Image.new("RGBA", (size, size), (0,0,0,0))
-    #
-    # bg.paste(image, (borderw,borderh))
-    #
-    # # Save file
-    # bg.save("test2.png")
+    char = _get_icon_char(icon)
+
+    draw.text((int(size * 0.25), int(size * 0.25)), char, color, font)
+
+    bbox = image.getbbox()
+    if bbox:
+        image = image.crop(bbox)
+
+    bg_size = max(image.size[0], image.size[1], size)
+    borderw = int((bg_size - image.size[0]) / 2)
+    borderh = int((bg_size - image.size[1]) / 2)
+
+    bg = Image.new('RGBA', (bg_size, bg_size), color=(0, 0, 0, 0))
+    bg.paste(image, (borderw, borderh))
+    if bg_size > size:
+        bg = bg.resize((size, size))
+
+    for i, px in enumerate(bg.getdata()):
+        pixel_color = px[:3]
+        if pixel_color != color:
+            y = i / size
+            x = i % size
+            alpha = px[3]
+            bg.putpixel((x, y), color + (alpha,))
+
+    bg.save(filename)
 
 
 def _get_icon_char(icon):
@@ -58,5 +66,6 @@ def _get_icon_char(icon):
 
 if __name__ == '__main__':
     # generate('database', 'blue', 512, "test.png")
-    generate('file-audio-o', 'red', 32, "test.png")
-    # generate('exclamation-triangle', 'blue', 512, "test.png")
+    # generate('file-audio-o', 'red', 512, "test.png")
+    _generate('exclamation-triangle', (0, 0, 255), 512, "test2.png")
+
