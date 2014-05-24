@@ -46,4 +46,4 @@ docs/build
 *.sqlite3
 node_modules
 
-images/*
+static/images/*

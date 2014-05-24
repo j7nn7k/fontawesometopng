@@ -12,7 +12,7 @@ __all__ = ['_generate']
 
 
 def get_fa_image_url(icon, color_hex, size):
-    filename = 'images/{0}_{1}_{2}.png'.format(icon, color_hex, size)
+    filename = 'static/images/{0}_{1}_{2}.png'.format(icon, color_hex, size)
 
     if os.path.isfile(filename):
         return filename
