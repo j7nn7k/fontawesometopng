@@ -18,7 +18,10 @@ $(document).ready(function () {
             })
                 .done(function (data) {
                     console.log(data['icon_url']);
-                    window.location.href(window.location.host + '/' + data['icon_url'])
+                    var image = window.location.origin + '/' + data['icon_url'];
+                    var $helper = $('#download-helper');
+                    $helper.attr('href', image);
+                    $helper.attr('download', image.split('/images/')[1]);
                 })
                 .fail(function (jqxhr, textStatus, error) {
                     console.log('fail');
