@@ -1,0 +1,47 @@
+#sample from github https://help.github.com/articles/ignoring-files
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Logs and databases #
+######################
+*.log
+#*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+*~
+*.pyc
+venv
+.idea
+*.db
+distribute-*.tar.gz
+socialfunders/socialfunders/media/static-collected/
+docs/_build
+debug.log
+socialfunders/socialfunders/media/media
+*.pydevproject
+celerybeat.pid
+socialfunders/socialfunders/media/static/styles/less/chameleon.less
+docs__old/_build
+*.pid
+*.sock
+docs/build
+*.sqlite3
+node_modules
