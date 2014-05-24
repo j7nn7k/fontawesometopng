@@ -11,6 +11,8 @@ $(document).ready(function () {
         var size = getSize(form);
         var color = getColor(form);
 
+        console.log(name, size, color);
+
         if (name && size && color) {
             $.getJSON('/generate?name=' + name + '&size=' + size + '&color=' + color, function () {
             })
@@ -24,19 +26,18 @@ $(document).ready(function () {
                 .always(function (data) {
                 });
         }
-
     });
 
     function getName(form) {
-        form.find('#iconName').val();
+        return form.find('#iconName').val();
     }
 
     function getSize(form) {
-        form.find('#iconName').val();
+        return form.find('#iconSize').val();
     }
 
     function getColor(form) {
-        form.find('#iconName').val();
+        return form.find('#iconColor').val();
     }
 
 });
