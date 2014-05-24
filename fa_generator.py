@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 import tinycss
 
 
-__all__ = ['_generate']
+__all__ = ['get_fa_image_url']
 
 
 def get_fa_image_url(icon, color_hex, size):
