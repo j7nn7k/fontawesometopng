@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A small web app returning Font Awesome icons as png. You can define the color and size of the icons and
+    download them directly.">
+    <meta name="author" content="stephan and jannik">
+    <title>Font Awesome to PNG online generator</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <i class="fa fa-cogs"></i>
+        Font Awesome to PNG
+    </div>
+
+    {% for message in get_flashed_messages() %}
+
+    <div class="alert alert-info fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      {{ message }}
+    </div>
+
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+
+</div>
+
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted">&copy; by <a href="http://github.com/minddust/">minddust</a> & <a href="http://github.com/j7nn7k/">j7nn7k</a></p>
+    </div>
+</div>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

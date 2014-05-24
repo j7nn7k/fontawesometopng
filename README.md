@@ -1,5 +1,5 @@
 # Font Awesome to PNG web app
-A small web app returning Font Awesome icons as png. Users can define the color and size
+A small web app returning Font Awesome icons as png. Users can define the color and size.
 
 # Pillow install
 
