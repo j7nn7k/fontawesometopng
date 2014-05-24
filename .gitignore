@@ -45,3 +45,5 @@ docs__old/_build
 docs/build
 *.sqlite3
 node_modules
+
+images/*
