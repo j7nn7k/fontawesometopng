@@ -37,7 +37,7 @@ def generate():
 def validate_name(name):
     if name:
         # TODO add proper error handling and regex
-        return name.lower().replace('fa-', '').replace(' ', '').replace('-', '').replace('_', '').replace('#', '')
+        return str(name.lower().replace('fa-', '').replace(' ', '').replace('-', '').replace('_', '').replace('#', ''))
     else:
         raise ValueError("Please provide an icon name!")
 
@@ -45,9 +45,9 @@ def validate_name(name):
 def validate_color(color):
     if color:
         # TODO add proper error handling and regex
-        return color.lower().replace(' ', '').replace('-', '').replace('_', '').replace('#', '')
+        return str(color.lower().replace(' ', '').replace('-', '').replace('_', '').replace('#', ''))
     else:
-        return '000'
+        return '000000'
 
 
 def validate_size(size):

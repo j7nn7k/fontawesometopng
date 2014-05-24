@@ -18,6 +18,7 @@ $(document).ready(function () {
             })
                 .done(function (data) {
                     console.log(data['icon_url']);
+                    window.location.href(window.location.host + '/' + data['icon_url'])
                 })
                 .fail(function (jqxhr, textStatus, error) {
                     console.log('fail');
