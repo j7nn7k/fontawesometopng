@@ -47,10 +47,10 @@ $(document).ready(function () {
 
 
     // *** Preview
-    $( "#icon-generate-form input" ).change(function(form) {
-        var icon_class = 'fa-' + $('#iconName').val();
-        console.log(icon_class);
-        $('.preview i').addClass(icon_class);
+    $('#icon-generate-form').find('input').change(function(form) {
+        var $preview = $('.preview i');
+        $preview.attr('style', 'font-size:' + $('#iconSize').val() + 'px ; color: #' + $('#iconColor').val() );
+        $preview.attr('class', 'fa fa-' + $('#iconName').val());
     });
 
 });
