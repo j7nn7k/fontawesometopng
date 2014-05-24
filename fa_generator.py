@@ -34,7 +34,7 @@ def get_fa_image_url(icon, color_hex, size):
 def _generate(icon, color, size, filename):
     image = Image.new('RGBA', (int(size * 1.5), int(size * 1.5)), color=(0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype('fontawesome-webfont.ttf', size)
+    font = ImageFont.truetype('static/fontawesome-webfont.ttf', size)
 
     char = _get_icon_char(icon)
 
@@ -68,7 +68,7 @@ def _generate(icon, color, size, filename):
 
 def _get_icon_char(icon):
     parser = tinycss.make_parser('page3')
-    stylesheet = parser.parse_stylesheet_file('font-awesome.min.css')
+    stylesheet = parser.parse_stylesheet_file('static/font-awesome.min.css')
     icon_rule = re.compile('\.fa-{0}:before,?'.format(icon))
 
     for rule in stylesheet.rules:
