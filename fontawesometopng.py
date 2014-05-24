@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from fa_generator import get_fa_image_url
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
@@ -26,9 +27,9 @@ def generate():
     icon_color = validate_color(request.args.get('color'))
     icon_size = validate_size(request.args.get('size'))
 
-    # icon_url = generate(icon_name, icon_color, icon_size)
+    icon_url = get_fa_image_url(icon_name, icon_color, icon_size)
 
-    icon_url = '{"icon_url": ' + icon_name + icon_color + icon_size + '}'
+    icon_url = '{"icon_url": "%s"}' % icon_url
 
     return icon_url
 
@@ -52,9 +53,9 @@ def validate_color(color):
 def validate_size(size):
     if size:
         # TODO add proper error handling and regex
-        return size.lower().replace(' ', '').replace('-', '').replace('_', '').replace('#', '')
+        return int(size.lower().replace(' ', '').replace('-', '').replace('_', '').replace('#', ''))
     else:
-        return '32'
+        return 32
 
 
 if __name__ == '__main__':

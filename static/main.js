@@ -17,11 +17,12 @@ $(document).ready(function () {
             $.getJSON('/generate?name=' + name + '&size=' + size + '&color=' + color, function () {
             })
                 .done(function (data) {
-                    console.log("success");
+                    console.log(data['icon_url']);
                 })
                 .fail(function (jqxhr, textStatus, error) {
-                    console.log("Status " + textStatus);
-                    console.log("Error " + error);
+                    console.log('fail');
+                    // console.log("Status " + textStatus);
+                    // console.log("Error " + error);
                 })
                 .always(function (data) {
                 });
