@@ -7,6 +7,11 @@
     color: #A8DBA8;
 }
 
+.preview .well {
+    min-height: 133px;
+    text-align: center;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

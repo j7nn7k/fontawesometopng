@@ -1,8 +1,10 @@
 $(document).ready(function () {
-    // activate BS alert functionality
+
+    // *** activate BS alert functionality
     $('.alert').alert();
 
-    // send request to backend
+
+    // *** send request to backend
     $('#icon-generate-form').submit(function (e) {
         e.preventDefault();
         var form = $(this);
@@ -10,8 +12,6 @@ $(document).ready(function () {
         var name = getName(form);
         var size = getSize(form);
         var color = getColor(form);
-
-        console.log(name, size, color);
 
         if (name && size && color) {
             $.getJSON('/generate?name=' + name + '&size=' + size + '&color=' + color, function () {
@@ -24,7 +24,7 @@ $(document).ready(function () {
                     $helper.attr('download', image.split('/images/')[1]);
                 })
                 .fail(function (jqxhr, textStatus, error) {
-                    console.log('fail');
+                    alert('Fail, please check your input values.');
                     // console.log("Status " + textStatus);
                     // console.log("Error " + error);
                 })
@@ -44,5 +44,13 @@ $(document).ready(function () {
     function getColor(form) {
         return form.find('#iconColor').val();
     }
+
+
+    // *** Preview
+    $( "#icon-generate-form input" ).change(function(form) {
+        var icon_class = 'fa-' + $('#iconName').val();
+        console.log(icon_class);
+        $('.preview i').addClass(icon_class);
+    });
 
 });
