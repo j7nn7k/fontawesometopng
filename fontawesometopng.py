@@ -28,7 +28,7 @@ def generate():
 
     # icon_url = generate(icon_name, icon_color, icon_size)
 
-    icon_url = icon_name + icon_color + icon_size
+    icon_url = '{"icon_url": ' + icon_name + icon_color + icon_size + '}'
 
     return icon_url
 
