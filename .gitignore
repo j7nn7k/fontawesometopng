@@ -47,3 +47,4 @@ docs/build
 node_modules
 
 static/images/*
+ansible/.vagrant

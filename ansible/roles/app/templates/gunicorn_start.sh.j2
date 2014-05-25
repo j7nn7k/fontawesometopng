@@ -11,8 +11,6 @@ NUM_WORKERS={{ ansible_processor_cores * 2 + 1 }}  # calculate how many worker p
 cd {{ app_checkout_path }}
 source {{ virtualenv_path }}bin/activate
 
-cd {{ app_name_verbose }}
-
 exec gunicorn {{ app_name_verbose }}:app \
   --name $NAME \
   --workers $NUM_WORKERS \
