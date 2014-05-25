@@ -28,3 +28,7 @@
 
 - name: install app dependencies listed in requirements.txt
   pip: requirements={{ requirements_file }} virtualenv={{ virtualenv_path }}
+
+- name: make images path writable
+  file: path={{ uploads_path }} owner={{ webapp_user }} group={{ webapp_user }} mode=0777 state=directory
+

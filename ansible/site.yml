@@ -6,3 +6,11 @@
   roles:
     - common
     - app
+
+- name: apply common configuration to the Digitalocean VM
+  hosts: production
+  sudo: True
+
+  roles:
+    - common
+    - app

@@ -9,7 +9,7 @@ upstream {{ app_name_verbose }}_server {
 server {
  
     listen   80;
-    server_name {{ sub_domain }}.{{ domain }};
+    server_name {{ sub_domain }}{{ domain }};
  
     client_max_body_size 4G;
  

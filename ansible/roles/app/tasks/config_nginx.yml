@@ -1,7 +1,7 @@
 ---
 
 - name: upload the nginx config for our site
-  template: src=nginxconf.j2 dest=/etc/nginx/sites-available/{{ sub_domain }}.{{ domain }}
+  template: src=nginxconf.j2 dest=/etc/nginx/sites-available/{{ sub_domain }}{{ domain }}
 
 - name: check if nginx has default symbolic linked website file
   stat: path=/etc/nginx/sites-enabled/default
@@ -15,11 +15,11 @@
     - restart nginx
 
 - name: check if we already symlinked our site
-  stat: path=/etc/nginx/sites-enabled/{{ sub_domain }}.{{ domain }}
+  stat: path=/etc/nginx/sites-enabled/{{ sub_domain }}{{ domain }}
   register: nginx_site_available
 
 - name: enable our site
-  command: "ln -s /etc/nginx/sites-available/{{ sub_domain }}.{{ domain }} /etc/nginx/sites-enabled/{{ sub_domain }}.{{ domain }}"
+  command: "ln -s /etc/nginx/sites-available/{{ sub_domain }}{{ domain }} /etc/nginx/sites-enabled/{{ sub_domain }}{{ domain }}"
   when: not nginx_site_available.stat.exists
   notify:
     - restart nginx

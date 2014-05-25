@@ -13,11 +13,11 @@ requirements_file: "{{ app_checkout_path }}requirements.txt"
 static_path: "{{ app_checkout_path }}static/"
 uploads_path: "{{ app_checkout_path }}static/images/"
 
-# TODO make dynamic later
 domain: fontawesometopng.io
-sub_domain: www
+sub_domain: '' # must be an empty string
 
-port: 4000
+
+port: 5050
 
 webapp_user: webapp
 
