@@ -39,13 +39,13 @@ $(document).ready(function () {
 
     function getName(form) {
         var name = form.find('#iconName').val();
-        name.replace(' ', '').replace('fa-', '');
+        name = name.replace(' ', '').replace('fa-', '');
         return name
     }
 
     function getSize(form) {
-        var size = form.find('#iconSize').val()
-        size.replace(' ', '').replace('px', '');
+        var size = form.find('#iconSize').val();
+        size = size.replace(' ', '').replace('px', '');
         if (parseInt(size) > 1024) {
             alert('Hey mate, please stay under 1024px. Working on a ラーメン (ramen) budget here ;)');
         }
@@ -54,7 +54,7 @@ $(document).ready(function () {
 
     function getColor(form) {
         var color = form.find('#iconColor').val();
-        color.replace(' ', '').replace('#', '');
+        color = color.replace(' ', '').replace('#', '');
         if (color.length = !6) {
             alert('Hey mate, please use full 6 digit hex values. Maybe soon I\'ll get a smarter form validation.');
         }
@@ -62,9 +62,13 @@ $(document).ready(function () {
     }
 
     // *** Preview
-    $('#icon-generate-form').find('input').change(function (form) {
+    $('#icon-generate-form').find('input').change(function () {
         var $preview = $('.preview i');
-        var size = $('#iconSize').val();
+        var form = $('#icon-generate-form');
+        var name = getName(form);
+        var size = getSize(form);
+        var color = getColor(form);
+
         if (parseInt(size) > 100) {
             size = 100;
             if ($('#iconName').val().length > 2) {
@@ -73,7 +77,10 @@ $(document).ready(function () {
         } else {
             $('.preview .preview-size-warning').addClass('hidden');
         }
-        $preview.attr('style', 'font-size:' + size + 'px ; color: #' + $('#iconColor').val());
-        $preview.attr('class', 'fa fa-' + $('#iconName').val());
+
+        $preview.attr('style', 'font-size:' + size + 'px ; color: #' + color);
+        $preview.attr('class', 'fa fa-' + name);
+
+        $('#download-helper').addClass('hidden');
     });
 });
