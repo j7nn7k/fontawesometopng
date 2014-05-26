@@ -42,8 +42,10 @@ def generate():
 
 def validate_name(name):
     if name:
-        # TODO add proper error handling and regex
-        return str(name.lower().replace(' ', '').lstrip('fa-'))
+        name = str(name).lower().replace(' ', '')
+        if name.startswith("fa-"):
+            name = name[3:]
+        return name
     else:
         raise ValueError("Please provide an icon name!")
 
