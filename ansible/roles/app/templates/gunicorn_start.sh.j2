@@ -5,17 +5,16 @@ LOGFILE=/var/log/gunicorn/event.log
 LOGDIR=$(dirname $LOGFILE)
 USER={{ webapp_user }}
 GROUP={{ webapp_user }}
-ADDRESS=127.0.0.1:8000
 NUM_WORKERS={{ ansible_processor_cores * 2 + 1 }}  # calculate how many worker processes should Gunicorn spawn
 
 cd {{ app_checkout_path }}
 source {{ virtualenv_path }}bin/activate
 
-exec gunicorn {{ app_name_verbose }}:app \
+exec {{ virtualenv_path }}bin/gunicorn {{ app_name_verbose }}:app \
   --name $NAME \
   --workers $NUM_WORKERS \
   --user=$USER --group=$GROUP \
   --log-level=warning \
   --log-file=$LOGFILE 2>>$LOGFILE  \
-  -p {{ webapps_home }}bin/run/gunicorn.pid
+  -p {{ webapps_home }}bin/run/gunicorn.pid  \
   -b 127.0.0.1:{{ port }}

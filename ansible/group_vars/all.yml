@@ -13,8 +13,8 @@ requirements_file: "{{ app_checkout_path }}requirements.txt"
 static_path: "{{ app_checkout_path }}static/"
 uploads_path: "{{ app_checkout_path }}static/images/"
 
-domain: fontawesometopng.io
-sub_domain: '' # must be an empty string
+domain: fa2png.io
+sub_domain: '' # if not set, it must be an empty string
 
 
 port: 5050
