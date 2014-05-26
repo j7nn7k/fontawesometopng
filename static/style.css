@@ -1,15 +1,31 @@
-/* Logo */
-
 .logo {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-size: 40px;
-    color: #A8DBA8;
+    font-size: 26px;
+    color: #709abe;
+}
+
+header, #flash-message, #generator {
+    background-color: #344f67;
+    color: #fff;
+    /*http://www.noisetexturegenerator.com/*/
+    background: url(/static/noise_bg.png) repeat #344f67;
+}
+
+#misc {
+    box-shadow: inset 0 10px 10px -10px #000000;
+}
+
+#generator, #misc {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .preview .well {
     min-height: 133px;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 0;
 }
 
 /* Sticky footer styles

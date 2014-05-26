@@ -15,35 +15,51 @@
 </head>
 <body>
 
-<div class="container">
-
-    <div class="logo">
-        <i class="fa fa-cogs"></i>
-        Font Awesome to PNG
+<header>
+    <div class="container">
+        <div class="logo">
+            <i class="fa fa-cogs"></i>
+            Font Awesome to PNG
+        </div>
     </div>
+</header>
 
-    {% for message in get_flashed_messages() %}
-
-    <div class="alert alert-info fade in">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      {{ message }}
+{% for message in get_flashed_messages() %}
+<article id="#flash-message">
+    <div class="container">
+        <div class="alert alert-info fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            {{ message }}
+        </div>
     </div>
+</article>
+{% endfor %}
 
-    {% endfor %}
 
-    {% block body %}{% endblock %}
-
-</div>
+{% block body %}{% endblock %}
 
 
 <div id="footer">
     <div class="container">
-        <p class="text-muted">&copy; by <a href="http://github.com/minddust/">minddust</a> & <a href="http://github.com/j7nn7k/">j7nn7k</a></p>
+        <p class="text-muted">&copy; by <a href="http://github.com/minddust/">minddust</a> & <a
+                href="http://github.com/j7nn7k/">j7nn7k</a></p>
     </div>
 </div>
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51348326-1', 'fa2png.io');
+  ga('send', 'pageview');
+  ga('set', 'anonymizeIp', true);
+</script>
+
 </body>
 </html>

@@ -2,4 +2,4 @@
 default ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
 
 [production]
-fontawesomeio_digitalocean ansible_ssh_host=107.170.180.39
+fontawesomeio_digitalocean ansible_ssh_host=107.170.180.39 ansible_ssh_user=root

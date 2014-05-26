@@ -1,14 +1,6 @@
 ---
-- name: apply common configuration to a vagrant test machine
-  hosts: vagrant
-  sudo: True
-
-  roles:
-    - common
-    - app
-
 - name: apply common configuration to the Digitalocean VM
-  hosts: production
+  hosts: production  # add vagrant here if testing
   sudo: True
 
   roles:
