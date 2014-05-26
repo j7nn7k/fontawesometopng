@@ -2,6 +2,8 @@ $(document).ready(function () {
 
     // *** activate BS alert functionality
     $('.alert').alert();
+    // *** activate BS popover
+    $('#how-it-works').popover();
 
 
     // *** send request to backend

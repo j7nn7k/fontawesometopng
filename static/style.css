@@ -32,6 +32,9 @@ header, #flash-message, #generator {
     border: 0;
 }
 
+#how-it-works {
+    color: #fff;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
