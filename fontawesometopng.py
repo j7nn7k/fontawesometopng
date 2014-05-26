@@ -25,13 +25,19 @@ def home():
 def generate():
     icon_name = validate_name(request.args.get('name'))
     icon_color = validate_color(request.args.get('color'))
-    icon_size = validate_size(request.args.get('size'))
+    try:
+        icon_size = validate_size(request.args.get('size'))
+    except ValueError:
+        error = 'Please enter an icon size under 1024px and only one value, please. E.g. 48. I\'ll return a squared image anyways. Thanks.'
+        return '{"custom_error": "%s"}' % error, 403
 
     icon_url = get_fa_image_url(icon_name, icon_color, icon_size)
 
-    icon_url = '{"icon_url": "%s"}' % icon_url
+    if not icon_url:
+        error = 'Fail, please check your input values. Got the correct Font Awesome icon name? Color: 6 digit hex value? Size under 1024px and only one value?'
+        return '{"custom_error": "%s"}' % error, 404
 
-    return icon_url
+    return '{"icon_url": "%s"}' % icon_url
 
 
 def validate_name(name):
@@ -52,7 +58,6 @@ def validate_color(color):
 
 def validate_size(size):
     if size:
-        # TODO add proper error handling and regex
         return int(size.lower().replace(' ', '').replace('-', '').replace('_', '').replace('#', ''))
     else:
         return 32
