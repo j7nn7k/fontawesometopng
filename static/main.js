@@ -41,7 +41,8 @@ $(document).ready(function () {
 
     function getName(form) {
         var name = form.find('#iconName').val();
-        name = name.replace(' ', '').replace('fa-', '');
+        name = name.replace(' ', '').replace(/^fa-+/, '');
+        console.log(name);
         return name
     }
 
