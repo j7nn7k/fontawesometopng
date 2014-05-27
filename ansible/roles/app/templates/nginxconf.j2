@@ -1,3 +1,6 @@
+# limit requests to prevent agressive bots from ddos-ing
+limit_req_zone $binary_remote_addr zone=one:10m rate=20r/m;
+
 upstream {{ app_name_verbose }}_server {
   # fail_timeout=0 means we always retry an upstream even if it failed
   # to return a good HTTP response (in case the Unicorn master nukes a
@@ -5,7 +8,7 @@ upstream {{ app_name_verbose }}_server {
  
   server 127.0.0.1:{{ port }} fail_timeout=0;
 }
- 
+
 server {
  
     listen   80;
@@ -32,6 +35,16 @@ server {
             break;
         }
     }
+
+    location  /generate  {
+        # limit requests to prevent agressive bots from ddos-ing
+        limit_req zone=one burst=1;
+        if (!-f $request_filename) {
+            proxy_pass http://{{ app_name_verbose }}_server;
+            break;
+        }
+    }
+
  
     location / {
         # an HTTP header important enough to have its own Wikipedia entry:
