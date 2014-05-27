@@ -75,7 +75,7 @@ $(document).ready(function () {
     });
 
     // *** preview
-    $form.find('input').change(function () {
+    $form.find('input').on('input propertychange change paste', function () {
         resetFeedback(this);
 
         var size = getSize();
@@ -91,10 +91,6 @@ $(document).ready(function () {
         $preview.attr('class', 'fa fa-' + getName());
 
         $download_helper.addClass('hidden');
-    });
-
-    $form.find('input').keyup(function() {
-        resetFeedback(this);
     });
 
     function getName() {
