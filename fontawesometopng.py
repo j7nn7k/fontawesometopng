@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
-from fa_generator import get_fa_image_url
+from fa_generator import get_fa_image_url, _get_icon_char
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
@@ -65,8 +65,19 @@ def generate():
 
     try:
         image_url = get_fa_image_url(icon_name, icon_color, icon_size)
-    except Exception as e:
+    except ValueError as e:
         # print e
+        result = {
+            'success': False,
+            'errors': {
+                'name': e.message
+            }
+        }
+        response = jsonify(result)
+        response.status_code = 400
+        return response
+    except Exception as e:
+        print e
         result = {
             'success': False,
             'exception': "Something bad occurred.\n\nLeave us a message on twitter and we will check the logs."
@@ -91,6 +102,11 @@ def validate_name(name):
     if re.match('^([a-z-]){1,30}$', name):
         if name.startswith("fa-"):
             name = name[3:]
+        try:
+            # just test - additional lookup inside the generator
+            _get_icon_char(name)
+        except ValueError as e:
+            raise e
         return name
     else:
         raise ValueError("Please provide a valid icon name!")

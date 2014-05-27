@@ -77,7 +77,7 @@ def _get_icon_char(icon):
                     char = char[1:-1]  # strip quotes
                     char = unichr(int(char[1:], 16))  # cast to int and create real unicode
                     return char
-            raise ValueError("Icon not found")
+    raise ValueError("Icon not found")
 
 
 if __name__ == '__main__':
