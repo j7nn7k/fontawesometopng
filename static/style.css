@@ -35,6 +35,11 @@ header, #flash-message, #generator {
 #how-it-works {
     color: #fff;
 }
+
+.has-success .control-label, .has-error .control-label {
+    color: #fff;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
