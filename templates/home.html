@@ -1,97 +1,108 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <article id="generator">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <form class="form-horizontal" id="icon-generate-form" role="form" action="#" method="get">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
+<article id="generator">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <form class="form-horizontal" id="icon-generate-form" role="form" action="#" method="get">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
 
-                            <div class="col-sm-10">
-                                <p class="form-control-static">Define your preferred icon type, size and color here</p>
-                            </div>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">Define your preferred icon type, size and color here</p>
                         </div>
-                        <div class="form-group">
-                            <label for="iconName" class="col-sm-2 control-label">Icon Name</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="iconName" placeholder="e.g. fa-paper-plane">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="iconSize" class="col-sm-2 control-label">Icon Size</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="iconSize" placeholder="e.g. 64, 32px">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="iconColor" class="col-sm-2 control-label">Icon Color</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="iconColor" placeholder="e.g. #FA1337, #CCC, green">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-lg" id="generate-btn"><i class="fa fa-cogs"></i> Generate Icon</button>
-
-                                <a class="btn btn-success btn-lg hidden" id="download-helper" href="#" download="#"><i class="fa fa-cloud-download"></i> Download Icon</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-4 preview">
-                    <p>Preview</p>
-
-                    <div class="well">
-                        <i class="fa"></i>
-
-                        <p class="preview-size-warning hidden">(Actual file size is bigger)</p>
                     </div>
-                    <a href="#" id="how-it-works" data-toggle="popover" data-container="body" data-placement="auto bottom"
-                       data-trigger="hover"
-                       data-content="Pick an icon at http://fontawesome.io/, remember the icon's name. Tell me the size and the color you need, click 'Generate Icon' and download the file to your disk.">How does it work?</a>
+                    <div class="form-group">
+                        <label for="iconName" class="col-sm-2 control-label">Icon Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="iconName" placeholder="e.g. fa-paper-plane">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="iconSize" class="col-sm-2 control-label">Icon Size</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="iconSize" placeholder="e.g. 64, 32px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="iconColor" class="col-sm-2 control-label">Icon Color</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="iconColor"
+                                   placeholder="e.g. #FA1337, #CCC, green">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary btn-lg" id="generate-btn"><i
+                                    class="fa fa-cogs"></i> Generate Icon
+                            </button>
+
+                            <a class="btn btn-success btn-lg hidden" id="download-helper" href="#" download="#"><i
+                                    class="fa fa-cloud-download"></i> Download Icon</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 preview">
+                <p>Preview</p>
+
+                <div class="well">
+                    <i class="fa"></i>
+
+                    <p class="preview-size-warning hidden">(Actual file size is bigger)</p>
                 </div>
+                <a href="#" id="how-it-works" data-toggle="popover" data-container="body" data-placement="auto bottom"
+                   data-trigger="hover"
+                   data-content="Pick an icon at http://fontawesome.io/, remember the icon's name. Tell me the size and the color you need, click 'Generate Icon' and download the file to your disk.">How
+                    does it work?</a>
             </div>
         </div>
-    </article>
-    <article id="misc">
-        <div class="container">
-            <h2>About</h2>
+    </div>
+</article>
+<article id="misc">
+    <div class="container">
+        <h2>About</h2>
 
-            <p>Hey, I'm the Font Awesome to PNG (fa2png) online generator. I'm a small web app returning <a
-                    href="http://fontawesome.io/">Font Awesome</a> icons as png. You can
-                define the color and size of the Font Awesome icons and
-                download them directly from my <a href="https://www.digitalocean.com/?refcode=db5b7d57ea35">SSD</a>.</p>
+        <p>Hey, I'm the Font Awesome to PNG (fa2png) online generator. I'm a small web app returning <a
+                href="http://fontawesome.io/">Font Awesome</a> icons as png. You can
+            define the color and size of the Font Awesome icons and
+            download them directly from my <a href="https://www.digitalocean.com/?refcode=db5b7d57ea35">SSD</a>.</p>
 
-            <h2>Why?</h2>
+        <h2>Why?</h2>
 
-            <p>Why am I useful you might ask? While I find your question a bit offending, let me explain anyways.
-                Icon fonts are an awesome thing for obvious reasons. Amongst other things are they scalable and tweakable
-                via css.
-                But sometimes you need an icon in pixel form. Let's say you need this little play button image urgently
-                for a presentation later this evening. In green and in 36 x 36px. You need it fast! It's a keynote at this
-                awesome conference.
-                You need it fast, right? You don't have Photoshop or Gimp ready? Sh#*!</p>
+        <p>Why am I useful you might ask? While I find your question a bit offending, let me explain anyways.
+            Icon fonts are an awesome thing for obvious reasons. Amongst other things are they scalable and tweakable
+            via css.
+            But sometimes you need an icon in pixel form. Let's say you need this little play button image urgently
+            for a presentation later this evening. In green and in 36 x 36px. You need it fast! It's a keynote at this
+            awesome conference.
+            You need it fast, right? You don't have Photoshop or Gimp ready? Sh#*!</p>
 
-            <p>Don't worry, I got your back. Despite your offending question earlier! ;)</p>
+        <p>Don't worry, I got your back. Despite your offending question earlier! ;)</p>
 
-            <p><b>Just pick an icon over at <a
-                    href="http://fontawesome.io/">Font Awesome</a>, remember the icon's name. Tell me the size and the color
-                you
-                need, click "Generate
-                Icon" and download the file to your disk.</b></p>
+        <p><b>Just pick an icon over at <a
+                href="http://fontawesome.io/">Font Awesome</a>, remember the icon's name. Tell me the size and the color
+            you
+            need, click "Generate
+            Icon" and download the file to your disk.</b></p>
 
-            <h2>Credits</h2>
-            <ul>
-                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
-                <li><a href="https://github.com/odyniec/font-awesome-to-png">font-awesome-to-png.py</a></li>
-            </ul>
-            <h2>Feedback?</h2>
-            <p>Ping my creators <a href="http://twitter.com/minddust">stephan</a> or <a href="http://twitter.com/jnk_wyrch">jannik</a>.</p>
-        </div>
-    </article>
+        <p><b>Blog posts about me</b>:
+            <a href="http://jannikweyrich.com/blog/2014/05/26/weekend-project-font-awesome-to-png.html">Post on Jannik's
+                blog</a>, <a href="http://www.minddust.com/project/fa2png/">Post on Stephan's blog</a></p>
+
+        <h2>Credits</h2>
+        <ul>
+            <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+            <li><a href="https://github.com/odyniec/font-awesome-to-png">font-awesome-to-png.py</a></li>
+        </ul>
+        <h2>Feedback?</h2>
+
+        <p>Ping my creators <a href="http://twitter.com/minddust">stephan</a> or <a href="http://twitter.com/jnk_wyrch">jannik</a>.
+        </p>
+    </div>
+</article>
 {% endblock %}
