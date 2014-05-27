@@ -24,9 +24,13 @@ server {
         alias   {{ uploads_path }};
     }
 
-    location  /stats/  {
-      auth_basic            "Whatcha lookn' at?";
-      auth_basic_user_file  {{ app_checkout_path }}.htpasswd;
+    location  /stats  {
+        auth_basic            "Whatcha lookn' at?";
+        auth_basic_user_file  {{ app_checkout_path }}.htpasswd;
+        if (!-f $request_filename) {
+            proxy_pass http://{{ app_name_verbose }}_server;
+            break;
+        }
     }
  
     location / {

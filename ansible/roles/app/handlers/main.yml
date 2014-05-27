@@ -1,9 +1,9 @@
 ---
 
-# TODO check if the restart runs properly
 - name: restart nginx
   service: name=nginx state=restarted
   sudo: yes
+  ignore_errors: yes
 
 - name: restart supervisor
   service: name=supervisor state=restarted
@@ -11,3 +11,4 @@
 
 - name: restart gunicorn via supervisor
   supervisorctl: name=gunicorn state=restarted
+  ignore_errors: yes
