@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
-    DEBUG=True,
-    SECRET_KEY='adc',
+    DEBUG=False,
+    SECRET_KEY='lDJcnr2*$34lh$fgSknw?rn',
 ))
 app.config.from_envvar('FATP_SETTINGS', silent=True)
 
