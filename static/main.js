@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    $('#how-it-works').popover();
-
     var $form = $('#icon-generate-form');
     var $form_name = $form.find('#iconName');
     var $form_size = $form.find('#iconSize');
@@ -10,6 +8,12 @@ $(document).ready(function () {
     var $preview_warning = $('.preview .preview-size-warning');
     var $download_helper = $('#download-helper');
     var $generate_btn = $('#generate-btn');
+
+    $form_color.colorpicker({
+        format: 'hex'
+    });
+
+    $('#how-it-works').popover();
 
     // *** send request to backend
     $form.submit(function (e) {
