@@ -1,9 +1,8 @@
 # coding=utf-8
 from __future__ import unicode_literals
-
 from fa_generator import get_fa_image_url, _get_icon_char
 import os
-from sqlite3 import dbapi2 as sqlite3
+import subprocess
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 
 
@@ -15,7 +14,7 @@ app = Flask(__name__)
 # Load default config and override config from an environment variable
 app.config.update(dict(
     DEBUG=True,
-    SECRET_KEY='development key',
+    SECRET_KEY='adc',
 ))
 app.config.from_envvar('FATP_SETTINGS', silent=True)
 
@@ -27,8 +26,9 @@ def home():
 
 @app.route('/stats')
 def stats():
-    import subprocess
-    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
+    git_rev = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
+    path, dirs, files = os.walk("static/images").next()
+    return "Git rev: {0}, No of files generated: {1}".format(git_rev, (len(files) - 1) )
 
 
 @app.route('/generate')
