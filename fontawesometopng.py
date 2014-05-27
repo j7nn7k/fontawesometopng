@@ -21,6 +21,12 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/stats')
+def stats():
+    import subprocess
+    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
+
+
 @app.route('/generate')
 def generate():
     icon_name = validate_name(request.args.get('name'))

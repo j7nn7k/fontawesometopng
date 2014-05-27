@@ -23,6 +23,11 @@ server {
     location /static/images/ {
         alias   {{ uploads_path }};
     }
+
+    location  /stats/  {
+      auth_basic            "Whatcha lookn' at?";
+      auth_basic_user_file  {{ app_checkout_path }}.htpasswd;
+    }
  
     location / {
         # an HTTP header important enough to have its own Wikipedia entry:
