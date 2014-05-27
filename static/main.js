@@ -72,22 +72,7 @@ $(document).ready(function () {
 
     // *** preview
     $form.find('input').change(function () {
-        var $this = $(this);
-        var $group = $this.parent().parent();
-
-        if ($group.hasClass('has-error')) {
-            $group.removeClass('has-error');
-            $this.parent().find('.help-block').remove();
-        }
-
-        if ($group.hasClass('has-success')) {
-            $group.removeClass('has-success');
-        }
-
-        if ($group.hasClass('has-feedback')) {
-            $group.removeClass('has-feedback');
-            $this.parent().find('.form-control-feedback').remove();
-        }
+        resetFeedback(this);
 
         var size = getSize();
 
@@ -104,6 +89,10 @@ $(document).ready(function () {
         $download_helper.addClass('hidden');
     });
 
+    $form.find('input').keyup(function() {
+        resetFeedback(this);
+    });
+
     function getName() {
         return $form_name.val().replace(' ', '').replace(/^fa-+/, '');
     }
@@ -114,5 +103,24 @@ $(document).ready(function () {
 
     function getColor() {
         return $form_color.val().replace(' ', '');
+    }
+
+    function resetFeedback(input) {
+        var $input = $(input);
+        var $group = $input.parent().parent();
+
+        if ($group.hasClass('has-error')) {
+            $group.removeClass('has-error');
+            $input.parent().find('.help-block').remove();
+        }
+
+        if ($group.hasClass('has-success')) {
+            $group.removeClass('has-success');
+        }
+
+        if ($group.hasClass('has-feedback')) {
+            $group.removeClass('has-feedback');
+            $input.parent().find('.form-control-feedback').remove();
+        }
     }
 });
