@@ -1,11 +1,15 @@
+# coding=utf-8
 from __future__ import unicode_literals
+
 from fa_generator import get_fa_image_url
 import os
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 
 
 # create our little application :)
+import re
+
 app = Flask(__name__)
 
 # Load default config and override config from an environment variable
@@ -29,46 +33,94 @@ def stats():
 
 @app.route('/generate')
 def generate():
-    icon_name = validate_name(request.args.get('name'))
-    icon_color = validate_color(request.args.get('color'))
+    errors = {}
+
+    icon_name = request.args.get('name', None)
+    icon_size = request.args.get('size', None)
+    icon_color = request.args.get('color', None)
+
     try:
-        icon_size = validate_size(request.args.get('size'))
-    except ValueError:
-        error = 'Please enter an icon size under 1024px and only one value, please. E.g. 48. I\'ll return a squared image anyways. Thanks.'
-        return '{"custom_error": "%s"}' % error, 403
+        icon_name = validate_name(icon_name)
+    except ValueError as e:
+        errors.update({'name': e.message})
 
-    icon_url = get_fa_image_url(icon_name, icon_color, icon_size)
+    try:
+        icon_size = validate_size(icon_size)
+    except ValueError as e:
+        errors.update({'size': e.message})
 
-    if not icon_url:
-        error = 'Fail, please check your input values. Got the correct Font Awesome icon name? Color: 6 digit hex value? Size under 1024px and only one value?'
-        return '{"custom_error": "%s"}' % error, 404
+    try:
+        icon_color = validate_color(icon_color)
+    except ValueError as e:
+        errors.update({'color': e.message})
 
-    return '{"icon_url": "%s"}' % icon_url
+    if errors:
+        result = {
+            'success': False,
+            'errors': errors
+        }
+        response = jsonify(result)
+        response.status_code = 400
+        return response
+
+    try:
+        image_url = get_fa_image_url(icon_name, icon_color, icon_size)
+    except Exception as e:
+        # print e
+        result = {
+            'success': False,
+            'exception': "Something bad occurred.\n\nLeave us a message on twitter and we will check the logs."
+        }
+        response = jsonify(result)
+        response.status_code = 400
+        return response
+    else:
+        result = {
+            'success': True,
+            'image_url': image_url
+        }
+        return jsonify(result)
 
 
 def validate_name(name):
-    if name:
-        name = str(name).lower().replace(' ', '')
+    if name is None or name == '':
+        raise ValueError("Please provide a name of the font awesome icon you wish to download, I can't read your mind! Though my creators are working on that, I heard.")
+
+    name = str(name).lower().replace(' ', '')
+
+    if re.match('^([a-z-]){1,30}$', name):
         if name.startswith("fa-"):
             name = name[3:]
         return name
     else:
-        raise ValueError("Please provide an icon name!")
+        raise ValueError("Please provide a valid icon name!")
 
 
 def validate_color(color):
-    if color:
-        # TODO add proper error handling and regex
-        return str(color.lower().replace(' ', '').replace('#', ''))
+    if color is None or color == '':
+        raise ValueError("Please provide a color!")
+
+    color = str(color).replace('HASH', '#').lower().replace(' ', '')
+
+    if re.match('^([a-z]{1,20})|(#[0-9a-f]{6})|(#[0-9a-f]{3})$', color):
+        return color
     else:
-        return '000000'
+        raise ValueError("Please provide a valid color!")
 
 
 def validate_size(size):
-    if size:
-        return int(size.lower().replace(' ', '').replace('px', ''))
-    else:
-        return 32
+    if size is None or size == '':
+        raise ValueError("Please provide a size!")
+
+    try:
+        size = int(size)
+    except ValueError as e:
+        raise ValueError("Please provide a valid size!")
+
+    if size < 8 or size > 1024:
+        raise ValueError("Hey mate, please stay under 1024px. Working on a ラーメン (ramen) budget here ;)")
+
+    return size
 
 
 if __name__ == '__main__':

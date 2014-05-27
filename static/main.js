@@ -1,89 +1,118 @@
 $(document).ready(function () {
 
-    // *** activate BS alert functionality
-    $('.alert').alert();
-    // *** activate BS popover
     $('#how-it-works').popover();
 
+    var $form = $('#icon-generate-form');
+    var $form_name = $form.find('#iconName');
+    var $form_size = $form.find('#iconSize');
+    var $form_color = $form.find('#iconColor');
+    var $preview = $('.preview i');
+    var $preview_warning = $('.preview .preview-size-warning');
+    var $download_helper = $('#download-helper');
+    var $generate_btn = $('#generate-btn');
 
     // *** send request to backend
-    $('#icon-generate-form').submit(function (e) {
+    $form.submit(function (e) {
         e.preventDefault();
-        var form = $(this);
 
-        var name = getName(form);
-        var size = getSize(form);
-        var color = getColor(form);
+        $generate_btn.html('<i class="fa fa-spinner fa-spin"></i> Generating awesome..');
+        $generate_btn.attr('disabled', 'disabled');
 
-        if (name) {
-            $.getJSON('/generate?name=' + name + '&size=' + size + '&color=' + color, function () {
+        $.getJSON('/generate?name=' + getName() + '&size=' + getSize() + '&color=' + getColor().replace('#', 'HASH'))
+            .done(function (data) {
+                if ('success' in data && data['success'] === true) {
+                    [$form_name, $form_size, $form_color].forEach(function ($element) {
+                        var $group = $element.parent().parent();
+                        if (!$group.hasClass('has-success')) {
+                            $group.addClass('has-success has-feedback');
+                            $element.parent().append('<span class="fa fa-check form-control-feedback"></span>');
+                        }
+                    });
+
+                    var url = window.location.origin + '/' + data['image_url'];
+
+                    $download_helper.attr('href', url);
+                    $download_helper.attr('download', url.split('/images/')[1]);
+                    $download_helper.removeClass('hidden');
+                }
             })
-                .done(function (data) {
-                    var image = window.location.origin + '/' + data['icon_url'];
-                    var $helper = $('#download-helper');
-                    $helper.attr('href', image);
-                    $helper.attr('download', image.split('/images/')[1]);
-                    $helper.removeClass('hidden');
-                })
-                .fail(function (jqxhr, textStatus, error) {
-                    try{
-                        alert(jqxhr['responseJSON']['custom_error']);
-                    } catch (e) {
-                        alert('Epic fail! Sorry, I didn\'t see this coming. Please try again.')
+            .fail(function (jqxhr, textStatus, error) {
+                var response = jqxhr['responseJSON'];
+
+                if ('exception' in response) {
+                    alert(response['exception']);
+                }
+                else if ('errors' in response) {
+                    for (var error in response['errors']) {
+                        var $element;
+                        switch (error) {
+                            case 'name': $element = $form_name; break;
+                            case 'size': $element = $form_size; break;
+                            case 'color': $element = $form_color; break;
+                            default: break;
+                        }
+                        if ($element !== undefined) {
+                            var $group = $element.parent().parent();
+                            if ($group.hasClass('has-error')) {
+                                $element.parent().find('.help-block').html(response['errors'][error]);
+                            }
+                            else {
+                                $group.addClass('has-error has-feedback');
+                                $element.parent().append('<span class="fa fa-times form-control-feedback"></span>');
+                                $element.parent().append('<span class="help-block">' + response['errors'][error] + '</span>');
+                            }
+                        }
                     }
-                })
-                .always(function (data) {
-                });
-        } else {
-            alert('Please enter the name of the font awesome icon you wish to download, I can\'t read your mind! Though my creators are working on that, I heard.')
-        }
+                }
+            }).always(function() {
+                $generate_btn.html('<i class="fa fa-cogs"></i> Generate Icon');
+                $generate_btn.removeAttr('disabled');
+            });
     });
 
-    function getName(form) {
-        var name = form.find('#iconName').val();
-        name = name.replace(' ', '').replace(/^fa-+/, '');
-        console.log(name);
-        return name
-    }
+    // *** preview
+    $form.find('input').change(function () {
+        var $this = $(this);
+        var $group = $this.parent().parent();
 
-    function getSize(form) {
-        var size = form.find('#iconSize').val();
-        size = size.replace(' ', '').replace('px', '');
-        if (parseInt(size) > 1024) {
-            alert('Hey mate, please stay under 1024px. Working on a ラーメン (ramen) budget here ;)');
+        if ($group.hasClass('has-error')) {
+            $group.removeClass('has-error');
+            $this.parent().find('.help-block').remove();
         }
-        return size
-    }
 
-    function getColor(form) {
-        var color = form.find('#iconColor').val();
-        color = color.replace(' ', '').replace('#', '');
-        if (color.length = !6) {
-            alert('Hey mate, please use full 6 digit hex values. Maybe soon I\'ll get a smarter form validation.');
+        if ($group.hasClass('has-success')) {
+            $group.removeClass('has-success');
         }
-        return color
-    }
 
-    // *** Preview
-    $('#icon-generate-form').find('input').change(function () {
-        var $preview = $('.preview i');
-        var form = $('#icon-generate-form');
-        var name = getName(form);
-        var size = getSize(form);
-        var color = getColor(form);
+        if ($group.hasClass('has-feedback')) {
+            $group.removeClass('has-feedback');
+            $this.parent().find('.form-control-feedback').remove();
+        }
 
-        if (parseInt(size) > 100) {
+        var size = getSize();
+
+        if (size > 100) {
             size = 100;
-            if ($('#iconName').val().length > 2) {
-                $('.preview .preview-size-warning').removeClass('hidden');
-            }
+            $preview_warning.removeClass('hidden');
         } else {
-            $('.preview .preview-size-warning').addClass('hidden');
+            $preview_warning.addClass('hidden');
         }
 
-        $preview.attr('style', 'font-size:' + size + 'px ; color: #' + color);
-        $preview.attr('class', 'fa fa-' + name);
+        $preview.attr('style', 'font-size:' + size + 'px; color:' + getColor());
+        $preview.attr('class', 'fa fa-' + getName());
 
-        $('#download-helper').addClass('hidden');
+        $download_helper.addClass('hidden');
     });
+
+    function getName() {
+        return $form_name.val().replace(' ', '').replace(/^fa-+/, '');
+    }
+
+    function getSize() {
+        return parseInt($form_size.val().replace(' ', '').replace('px', ''));
+    }
+
+    function getColor() {
+        return $form_color.val().replace(' ', '');
+    }
 });

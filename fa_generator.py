@@ -4,29 +4,26 @@ from __future__ import unicode_literals
 import os.path
 import re
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageColor
 import tinycss
 
 
 __all__ = ['get_fa_image_url']
 
 
-def get_fa_image_url(icon, color_hex, size):
-    filename = 'static/images/{0}_{1}_{2}.png'.format(icon, color_hex, size)
+def get_fa_image_url(icon, color, size):
+    rgba = ImageColor.getrgb('%s' % color)
+    rgb = rgba[:3]
+    color_hex = '{0:0>2x}{1:0>2x}{2:0>2x}'.format(rgb[0], rgb[1], rgb[2])
+    filename = 'static/images/{0}_{1}_{2}.png'.format(icon, color_hex, size).lower()
 
     if os.path.isfile(filename):
         return filename
 
-    r = int(color_hex[0:2], 16)
-    g = int(color_hex[2:4], 16)
-    b = int(color_hex[4:6], 16)
-    color = (r, g, b)
-
     try:
-        _generate(icon, color, size, filename)
+        _generate(icon, rgb, size, filename)
     except Exception as e:
-        print e
-        return None
+        raise e
     else:
         return filename
 
@@ -80,7 +77,7 @@ def _get_icon_char(icon):
                     char = char[1:-1]  # strip quotes
                     char = unichr(int(char[1:], 16))  # cast to int and create real unicode
                     return char
-            return None
+            raise ValueError("Icon not found")
 
 
 if __name__ == '__main__':
@@ -89,5 +86,6 @@ if __name__ == '__main__':
     # _generate('exclamation-triangle', (0, 0, 255), 512, "test2.png")
     # get_fa_image_url('exclamation-triangle', 'FF0000', 512)
     # get_fa_image_url('exclamation-triangle', 'F0F000', 512)
-    get_fa_image_url('exclamation-triangle', 'FF0000', 256)
+    get_fa_image_url('pied-piper-alt', 'FF0000', 1024)
+    # get_fa_image_url('exclamation-triangle', 'FF0000', 256)
 
