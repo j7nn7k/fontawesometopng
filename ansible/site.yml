@@ -1,6 +1,6 @@
 ---
 - name: apply common configuration to the Digitalocean VM
-  hosts: vagrant  # add vagrant here if testing
+  hosts: production  # add vagrant here if testing
   sudo: True
 
   roles:
