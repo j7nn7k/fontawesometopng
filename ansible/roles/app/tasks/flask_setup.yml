@@ -14,7 +14,6 @@
 - name: checkout latest web app code
   git: repo={{ git_repo }} dest={{ app_checkout_path }} key_file=/home/.ssh/deploy_key accept_hostkey=yes
   notify:
-    - restart nginx
     - restart gunicorn via supervisor
 
 - name: delete pyc files in project dir
