@@ -16,6 +16,10 @@ uploads_path: "{{ app_checkout_path }}static/images/"
 domain: fa2png.io
 sub_domain: '' # if not set, it must be an empty string
 
+# fail2ban config
+ip_whitelist: "77.0.27.208"
+fail2ban_bantime: 600
+fail2ban_maxretry: 6
 
 port: 5050
 

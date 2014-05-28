@@ -3,3 +3,16 @@
 
 - name: update packages
   apt: update_cache=yes
+
+- name: ensure app server packages are installed
+  apt: pkg={{item}} state=present
+  sudo: yes
+  with_items:
+    - fail2ban
+
+- name: upload fail2ban config file
+  template: src=jaillocal.j2 dest=/etc/fail2ban/jail.local
+  notify: restart fail2ban
+
+- name: make fail2ban log readable
+  file: path=/var/log/fail2ban.log mode=0644 state=touch

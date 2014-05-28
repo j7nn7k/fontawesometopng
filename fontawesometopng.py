@@ -28,7 +28,16 @@ def home():
 def stats():
     git_rev = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
     path, dirs, files = os.walk("static/images").next()
-    return "Git rev: {0}, No of files generated: {1}".format(git_rev, (len(files) - 1) )
+    fail2ban_warnings = ''
+    try:
+        with open('/var/log/fail2ban.log', 'r') as f:
+            for line in f:
+                if 'WARNING' in line:
+                    fail2ban_warnings = fail2ban_warnings + '<br>' + line
+    except IOError as e:
+        fail2ban_warnings = "I/O error({0}): {1}".format(e.errno, e.strerror)
+
+    return "Git rev: {0}<br> No of files generated: {1}<br> fail2ban warnings: {2}".format(git_rev, (len(files) - 1), fail2ban_warnings)
 
 
 @app.route('/generate')
