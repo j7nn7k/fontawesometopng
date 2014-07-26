@@ -6,7 +6,6 @@ import subprocess
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 
 
-# create our little application :)
 import re
 
 app = Flask(__name__)
@@ -18,26 +17,20 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FATP_SETTINGS', silent=True)
 
+# Constants
+FA_VERSION = '4.1.0'
+
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', fa_version=FA_VERSION)
 
 
 @app.route('/stats')
 def stats():
     git_rev = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
     path, dirs, files = os.walk("static/images").next()
-    fail2ban_warnings = ''
-    try:
-        with open('/var/log/fail2ban.log', 'r') as f:
-            for line in f:
-                if 'WARNING' in line:
-                    fail2ban_warnings = fail2ban_warnings + '<br>' + line
-    except IOError as e:
-        fail2ban_warnings = "I/O error({0}): {1}".format(e.errno, e.strerror)
-
-    return "Git rev: {0}<br> No of files generated: {1}<br> fail2ban warnings: {2}".format(git_rev, (len(files) - 1), fail2ban_warnings)
+    return "Git rev: {0}<br> No of files generated: {1}".format(git_rev, (len(files) - 1))
 
 
 @app.route('/generate')
@@ -75,7 +68,6 @@ def generate():
     try:
         image_url = get_fa_image_url(icon_name, icon_color, icon_size)
     except ValueError as e:
-        # print e
         result = {
             'success': False,
             'errors': {
@@ -86,7 +78,6 @@ def generate():
         response.status_code = 400
         return response
     except Exception as e:
-        print e
         result = {
             'success': False,
             'exception': "Something bad occurred.\n\nLeave us a message on twitter and we will check the logs."
@@ -104,7 +95,8 @@ def generate():
 
 def validate_name(name):
     if name is None or name == '':
-        raise ValueError("Please provide a name of the font awesome icon you wish to download, I can't read your mind! Though my creators are working on that, I heard.")
+        raise ValueError(
+            "Please provide a name of the font awesome icon you wish to download, I can't read your mind! Though my creators are working on that, I heard.")
 
     name = str(name).lower().replace(' ', '')
 

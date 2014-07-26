@@ -11,16 +11,20 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-colorpicker.min.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
+<div class="masthead"><!-- closed in home.html -->
 <header>
     <div class="container">
-        <div class="logo">
-            <i class="fa fa-cogs"></i>
-            Font Awesome to PNG
+        <div class="logo text-center">
+            <div class="logo-wrapper">
+                <i class="fa fa-cogs"></i>
+                <span class="logo-font"> Font Awesome to PNG</span>
+            </div>
         </div>
     </div>
 </header>
