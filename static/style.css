@@ -1,9 +1,12 @@
+body {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .logo {
     margin-top: 70px;
     margin-bottom: 20px;
     font-size: 26px;
     color: #fff;
-    font-family: 'Ubuntu', sans-serif;;
 }
 
 .logo-wrapper {
@@ -15,11 +18,15 @@
 
 #misc, #interactive-bar {
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
+}
+
+#interactive-bar .row > div {
+    margin-bottom: 10px;
 }
 
 .masthead {
-    background-image: linear-gradient(to bottom, #3c4f67 0, #398199 100%);
+    background-image: linear-gradient(to bottom, #398199 0, #3c4f67 100%);
 }
 
 header, #flash-message, #generator {
