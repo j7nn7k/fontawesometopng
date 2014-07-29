@@ -13,6 +13,3 @@
 - name: upload fail2ban config file
   template: src=jaillocal.j2 dest=/etc/fail2ban/jail.local
   notify: restart fail2ban
-
-- name: make fail2ban log readable
-  file: path=/var/log/fail2ban.log mode=0644 state=touch
