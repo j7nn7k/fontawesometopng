@@ -96,21 +96,20 @@ def generate():
 def validate_name(name):
     if name is None or name == '':
         raise ValueError(
-            "Please provide a name of the font awesome icon you wish to download, I can't read your mind! Though my creators are working on that, I heard.")
+            "Please provide a name of the font awesome icon you wish to download, I can't read your mind! "
+            "Though my creators are working on that, I heard.")
 
     name = str(name).lower().replace(' ', '')
 
-    if re.match('^([a-z-]){1,30}$', name):
-        if name.startswith("fa-"):
-            name = name[3:]
-        try:
-            # just test - additional lookup inside the generator
-            _get_icon_char(name)
-        except ValueError as e:
-            raise e
-        return name
-    else:
-        raise ValueError("Please provide a valid icon name!")
+    name = (name[:30]) if len(name) > 30 else name
+    if name.startswith("fa-"):
+        name = name[3:]
+    try:
+        # just test - additional lookup inside the generator
+        _get_icon_char(name)
+    except ValueError as e:
+        raise e
+    return name
 
 
 def validate_color(color):
