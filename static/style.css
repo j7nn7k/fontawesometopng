@@ -16,6 +16,14 @@ body {
     padding: 15px;
 }
 
+.announcement-banner-top {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.announcement-banner-top a {
+    color: white;
+}
+
 #misc, #interactive-bar {
     padding-top: 30px;
     padding-bottom: 20px;
