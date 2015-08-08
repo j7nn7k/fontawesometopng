@@ -18,7 +18,7 @@ app.config.update(dict(
 app.config.from_envvar('FATP_SETTINGS', silent=True)
 
 # Constants
-FA_VERSION = '4.2.0'
+FA_VERSION = '4.4.0'
 
 
 @app.route('/')
