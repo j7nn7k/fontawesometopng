@@ -1,6 +1,8 @@
 # Font Awesome to PNG web app
 A small web app returning Font Awesome icons as png. Users can define the color and size.
 
+This is the old code base for the prototype we used before we refactored the app which can now be found under http://fa2png.io
+
 # Pillow install
 
 ## Mac OS X
